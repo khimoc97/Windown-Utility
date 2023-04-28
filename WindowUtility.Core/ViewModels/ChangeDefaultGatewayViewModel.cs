@@ -1,22 +1,33 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
+﻿using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.Configuration;
 using System.Diagnostics;
-using System.Reflection;
 using WindowUtility.Core.Models;
 using WindowUtility.Core.Providers;
+using WindowUtility.Core.Services;
 
 namespace WindowUtility.Core.ViewModels
 {
     public partial class ChangeDefaultGatewayViewModel : ViewModelBase
     {
         private readonly IConfiguration _configuration;
+        private readonly INetworkAdapterService _networkAdapterService;
 
-        public ChangeDefaultGatewayViewModel(IApplicationStateProvider applicationStateProvider, IConfiguration configuration) : base(applicationStateProvider)
+        public ChangeDefaultGatewayViewModel(
+            IApplicationStateProvider applicationStateProvider, 
+            IConfiguration configuration,
+            INetworkAdapterService networkAdapterService) : base(applicationStateProvider)
         {
             _configuration = configuration;
-            var result = Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location);
-            Trace.WriteLine(result);
+            _networkAdapterService = networkAdapterService;
+            var options = _configuration.GetValue<List<GatewayInfo>>("ListGateway");
+            Trace.WriteLine("");
         }
 
+        [RelayCommand]
+        private void ButtonClicked()
+        {
+            _networkAdapterService.ChangeDefaultGateway();
+            Trace.WriteLine($"{nameof(ButtonClicked)}");
+        }
     }
 }

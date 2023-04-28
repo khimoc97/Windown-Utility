@@ -1,10 +1,12 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Threading;
+using WindowUtility.Core.Models;
 using WindowUtility.Core.Providers;
 
 namespace WindowUtility
@@ -23,7 +25,8 @@ namespace WindowUtility
             .ConfigureServices((context, services) =>
             {
                 services.AddUiServices(context.Configuration);
-            }).Build();
+            })
+            .Build();
 
         // <summary>
         /// Gets registered service.
@@ -43,6 +46,7 @@ namespace WindowUtility
         {
             await _host.StartAsync();
 
+            var windowUtilityOption = GetService<IOptions<AppSettings>>();
             var stateProvider = GetService<IApplicationStateProvider>();
             //stateProvider.PatchState(new Dictionary<string, string>
             //{

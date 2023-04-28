@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WindowUtility.Core.Models;
 using WindowUtility.Core.Providers;
+using WindowUtility.Core.Services;
 using WindowUtility.Core.ViewModels;
 
 namespace WindowUtility.Core
@@ -13,6 +14,7 @@ namespace WindowUtility.Core
         {
             return services
                 .AddSingleton<IApplicationStateProvider, InMemoryApplicationStateProvider>()
+                .AddSingleton<INetworkAdapterService, NetworkAdapterService>()
                 // ViewModel
                 .AddViewModels()
                 .AddTransient<IMessenger>(sp => WeakReferenceMessenger.Default)

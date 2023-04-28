@@ -36,7 +36,7 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <Button Grid.Column="1">Apply</Button>
+            <Button Command="{Binding ViewModel.ButtonClickedCommand}" Grid.Column="1">Apply</Button>
         </Grid>
     </Grid>
 </ui:UiPage>
