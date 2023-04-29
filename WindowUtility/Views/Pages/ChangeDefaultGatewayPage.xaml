@@ -12,6 +12,11 @@
            d:DataContext="{d:DesignInstance local:ChangeDefaultGatewayPage,
                                      IsDesignTimeCreatable=False}"
            mc:Ignorable="d">
+    <behaviors:Interaction.Triggers>
+        <behaviors:EventTrigger EventName="Loaded">
+            <behaviors:InvokeCommandAction Command="{Binding ViewModel.InitCommand}"/>
+        </behaviors:EventTrigger>
+    </behaviors:Interaction.Triggers>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -27,16 +32,23 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             
-            <DataGrid Grid.Column="0">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="No." Width="*"/>
-                    <DataGridTextColumn Header="Name" Width="*"/>
-                    <DataGridTextColumn Header="Bandwidth" Width="*"/>
-                    <DataGridTextColumn Header="Gateway" Width="*"/>
-                </DataGrid.Columns>
-            </DataGrid>
+            <ui:DataGrid Grid.Column="0"
+                         x:Name="dgGateways"
+                         ItemsSource="{Binding ViewModel.GatewayInfos}"
+                         AutoGenerateColumns="False"
+                         IsReadOnly="True"
+                         SelectionMode="Single"
+                         SelectionUnit="FullRow">
+                <ui:DataGrid.Columns>
+                    <DataGridTextColumn Header="No." Binding="{Binding Id}" Width="Auto"/>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
+                    <DataGridTextColumn Header="Bandwidth" Binding="{Binding Bandwidth}" Width="*"/>
+                    <DataGridTextColumn Header="Gateway" Binding="{Binding DefaultGateway}" Width="*"/>
+                    <DataGridCheckBoxColumn Header="Select"/>
+                </ui:DataGrid.Columns>
+            </ui:DataGrid>
 
-            <Button Command="{Binding ViewModel.ButtonClickedCommand}" Grid.Column="1">Apply</Button>
+            <Button Grid.Column="1">Apply</Button>
         </Grid>
     </Grid>
 </ui:UiPage>
