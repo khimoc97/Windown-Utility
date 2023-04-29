@@ -7,12 +7,12 @@ namespace WindowUtility.Core.Services
     {
         public void ChangeDefaultGateway()
         {
-            GetSystemInfo();
+            throw new NotImplementedException();
         }
 
         public void GetCurrentNetworkStatistic()
         {
-            throw new NotImplementedException();
+            GetSystemInfo();
         }
 
         private void GetSystemInfo()
@@ -20,9 +20,11 @@ namespace WindowUtility.Core.Services
             ManagementClass managementClass = new ManagementClass("Win32_NetworkAdapterConfiguration");
             var instances = managementClass.GetInstances();
 
-            foreach ( var instance in instances)
+            foreach (var instance in instances)
             {
-                Trace.WriteLine(instance["ipEnabled"]);
+                if (!(bool)instance["ipEnabled"]) continue;
+
+                string[] ipAddresses = (string[])instance["IPAddress"];
             }
         }
     }

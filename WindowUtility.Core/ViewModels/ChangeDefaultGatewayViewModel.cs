@@ -19,6 +19,9 @@ namespace WindowUtility.Core.ViewModels
         [NotifyCanExecuteChangedFor(nameof(InitCommand))]
         private ObservableCollection<GatewayInfo> _gatewayInfos = new();
 
+        [ObservableProperty]
+        private GatewayInfo _selectedGatewayInfo = new();
+
         public ChangeDefaultGatewayViewModel(
             IApplicationStateProvider applicationStateProvider, 
             IOptions<AppSettings> options,
@@ -30,16 +33,10 @@ namespace WindowUtility.Core.ViewModels
         }
 
         [RelayCommand]
-        private void RowSelected()
-        {
-            Trace.WriteLine("Selected");
-        }
-
-        [RelayCommand]
         private void Init()
         {
             GatewayInfos = _options.Value.ListGateway.AsObservableCollection();
-            Trace.WriteLine(GatewayInfos.Count);
+            _networkAdapterService.GetCurrentNetworkStatistic();
         }
     }
 }
