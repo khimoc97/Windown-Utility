@@ -22,6 +22,9 @@ namespace WindowUtility.Core.ViewModels
         [ObservableProperty]
         private GatewayInfo _selectedGatewayInfo = new();
 
+        [ObservableProperty]
+        private NetworkAdapterInformation _networkAdapterInformation = new();
+
         public ChangeDefaultGatewayViewModel(
             IApplicationStateProvider applicationStateProvider, 
             IOptions<AppSettings> options,
@@ -36,7 +39,7 @@ namespace WindowUtility.Core.ViewModels
         private void Init()
         {
             GatewayInfos = _options.Value.ListGateway.AsObservableCollection();
-            _networkAdapterService.GetCurrentNetworkStatistic();
+            NetworkAdapterInformation = _networkAdapterService.GetCurrentNetworkStatistic();
         }
     }
 }

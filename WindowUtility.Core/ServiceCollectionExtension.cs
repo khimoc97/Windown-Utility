@@ -1,13 +1,16 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Runtime.Versioning;
 using WindowUtility.Core.Models;
 using WindowUtility.Core.Providers;
 using WindowUtility.Core.Services;
 using WindowUtility.Core.ViewModels;
+using WindowUtility.Core.Mapper;
 
 namespace WindowUtility.Core
 {
+    [SupportedOSPlatform("windows")]
     public static class ServiceCollectionExtension
     {
         public static IServiceCollection AddCoreServices(this IServiceCollection services)
@@ -17,6 +20,7 @@ namespace WindowUtility.Core
                 .AddSingleton<INetworkAdapterService, NetworkAdapterService>()
                 // ViewModel
                 .AddViewModels()
+                .AddAutoMapper(typeof(AutoMapperProfile).Assembly)
                 .AddTransient<IMessenger>(sp => WeakReferenceMessenger.Default)
                 ;
             ;

@@ -7,8 +7,8 @@
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
              Title="{Binding ViewModel.ApplicationTitle, Mode=OneWay}" 
+             Width="1000"
              Height="650" 
-             Width="1200"
              d:DataContext="{d:DesignInstance local:MainPage,
                              IsDesignTimeCreatable=True}"
              ExtendsContentIntoTitleBar="True"

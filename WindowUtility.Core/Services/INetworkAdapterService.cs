@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net.NetworkInformation;
+using WindowUtility.Core.Models;
 
 namespace WindowUtility.Core.Services
 {
     public interface INetworkAdapterService
     {
-        void GetCurrentNetworkStatistic();
         void ChangeDefaultGateway();
+        NetworkAdapterInformation GetCurrentNetworkStatistic(NetworkInterfaceType? networkType = NetworkInterfaceType.Ethernet);
     }
 }

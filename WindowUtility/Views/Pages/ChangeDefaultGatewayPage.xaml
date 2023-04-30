@@ -6,8 +6,8 @@
            xmlns:local="clr-namespace:WindowUtility.Views.Pages"
            xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
            xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
-           d:DesignHeight="450" 
-           d:DesignWidth="800"
+           d:DesignWidth="1000"
+           d:DesignHeight="650" 
            Title="Change Default Gateway"
            d:DataContext="{d:DesignInstance local:ChangeDefaultGatewayPage,
                                      IsDesignTimeCreatable=False}"
@@ -21,15 +21,48 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0">Choose Gateway</Label>
+        <StackPanel Grid.Row="0" 
+                    Orientation="Vertical"
+                    Margin="0 0 0 16">
+            <Label FontSize="16">
+                Current configuration
+            </Label>
 
-        <Grid Grid.Row="1">
+            <UniformGrid x:Name="ugridCurrentNetworkConfiguration"
+                         Rows="2"
+                         Columns="3">
+                <!--<Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>-->
+                <Label Content="{Binding ViewModel.NetworkAdapterInformation.IpAddress}"
+                           ContentStringFormat='IP Address: {0}'
+                           Width="Auto"/>
+                <Label Content="{Binding ViewModel.NetworkAdapterInformation.SubnetMask}"
+                           ContentStringFormat="Subnet Mask: {0}"/>
+                <Label Content="{Binding ViewModel.NetworkAdapterInformation.DefaultGateway}"
+                           ContentStringFormat="Default Gateway: {0}"/>
+
+                <Label Content="{Binding ViewModel.NetworkAdapterInformation.PreferredDnsServer}"
+                           ContentStringFormat='Preferred DNS: {0}'/>
+                <Label Content="{Binding ViewModel.NetworkAdapterInformation.AlternativeDnsServer}"
+                           ContentStringFormat="Alternative DNS: {0}"/>
+            </UniformGrid>
+        </StackPanel>
+
+        <Label Grid.Row="1"
+               FontSize="16">
+            Choose Gateway
+        </Label>
+
+        <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="175"/>
             </Grid.ColumnDefinitions>
 
             <ui:DataGrid Grid.Column="0"
@@ -51,7 +84,13 @@
                 </ui:DataGrid.Columns>
             </ui:DataGrid>
 
-            <Button Grid.Column="1" Margin="5 0 0 0">Apply</Button>
+            <Button IsEnabled="{Binding ViewModel.SelectedGatewayInfo.Id}" 
+                    Grid.Column="1" 
+                    HorizontalAlignment="Center"
+                    Width="130"
+                    VerticalAlignment="Top">
+                Change gateway
+            </Button>
         </Grid>
     </Grid>
 </ui:UiPage>
