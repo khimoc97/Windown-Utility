@@ -15,9 +15,9 @@ namespace WindowUtility.Core.Mapper
         public AutoMapperProfile()
         {
             CreateMap<IPInterfaceProperties, NetworkAdapterInformation>()
-                .ForMember(nai => nai.IpAddress, nai => nai.MapFrom(iip => iip.UnicastAddresses.Single(ip => ip.Address.AddressFamily == AddressFamily.InterNetwork).Address.ToString()))
-                .ForMember(nai => nai.SubnetMask, nai => nai.MapFrom(iip => iip.UnicastAddresses.Single(ip => ip.Address.AddressFamily == AddressFamily.InterNetwork).IPv4Mask.ToString()))
-                .ForMember(nai=>nai.DefaultGateway, nai=>nai.MapFrom(iip=>iip.GatewayAddresses.Single().Address.ToString()))
+                .ForMember(nai => nai.IpAddress, nai => nai.MapFrom(iip => iip.UnicastAddresses.First(ip => ip.Address.AddressFamily == AddressFamily.InterNetwork).Address.ToString()))
+                .ForMember(nai => nai.SubnetMask, nai => nai.MapFrom(iip => iip.UnicastAddresses.First(ip => ip.Address.AddressFamily == AddressFamily.InterNetwork).IPv4Mask.ToString()))
+                .ForMember(nai=>nai.DefaultGateway, nai=>nai.MapFrom(iip=>iip.GatewayAddresses.First().Address.ToString()))
                 .ForMember(nai=>nai.PreferredDnsServer,nai=>nai.MapFrom(iip=>iip.DnsAddresses.First()))
                 .ForMember(nai => nai.AlternativeDnsServer, nai => nai.MapFrom(iip=>iip.DnsAddresses.Skip(1).First()));
         }

@@ -9,7 +9,7 @@ namespace WindowUtility.Core.Interactions
     public interface IToastService
     {
         Task ShowAsync(string message, string title, ToastType type);
-        Task ShowInformation(string message) => ShowAsync(message, "Information", ToastType.Information);
+        Task ShowInformationAsync(string message) => ShowAsync(message, "Information", ToastType.Information);
     }
 
     public enum ToastType

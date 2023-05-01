@@ -40,17 +40,17 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>-->
                 <Label Content="{Binding ViewModel.NetworkAdapterInformation.IpAddress}"
-                           ContentStringFormat='IP Address: {0}'
+                           ContentStringFormat='IP Address: &#x0d;&#x0a;{0}'
                            Width="Auto"/>
                 <Label Content="{Binding ViewModel.NetworkAdapterInformation.SubnetMask}"
-                           ContentStringFormat="Subnet Mask: {0}"/>
+                           ContentStringFormat="Subnet Mask: &#x0d;&#x0a;{0}"/>
                 <Label Content="{Binding ViewModel.NetworkAdapterInformation.DefaultGateway}"
-                           ContentStringFormat="Default Gateway: {0}"/>
+                           ContentStringFormat="Default Gateway: &#x0d;&#x0a;{0}"/>
 
                 <Label Content="{Binding ViewModel.NetworkAdapterInformation.PreferredDnsServer}"
-                           ContentStringFormat='Preferred DNS: {0}'/>
+                           ContentStringFormat='Preferred DNS: &#x0d;&#x0a;{0}'/>
                 <Label Content="{Binding ViewModel.NetworkAdapterInformation.AlternativeDnsServer}"
-                           ContentStringFormat="Alternative DNS: {0}"/>
+                           ContentStringFormat="Alternative DNS: &#x0d;&#x0a;{0}"/>
             </UniformGrid>
         </StackPanel>
 
@@ -76,6 +76,16 @@
                          CanUserResizeColumns="False"
                          ItemsSource="{Binding ViewModel.GatewayInfos}"
                          SelectedValue="{Binding ViewModel.SelectedGatewayInfo, Mode=TwoWay}">
+                <ui:DataGrid.CellStyle>
+                    <Style TargetType="DataGridCell">
+                        <Style.Triggers>
+                            <Trigger Property="DataGridCell.IsSelected" Value="True">
+                                <Setter Property="Background" Value="Gray" />
+                                <Setter Property="BorderBrush" Value="Gray"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ui:DataGrid.CellStyle>
                 <ui:DataGrid.Columns>
                     <DataGridTextColumn Header="No." Binding="{Binding Id}" Width="50"/>
                     <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
@@ -84,13 +94,23 @@
                 </ui:DataGrid.Columns>
             </ui:DataGrid>
 
-            <Button IsEnabled="{Binding ViewModel.SelectedGatewayInfo.Id}" 
-                    Grid.Column="1" 
-                    HorizontalAlignment="Center"
-                    Width="130"
-                    VerticalAlignment="Top">
-                Change gateway
-            </Button>
+            <StackPanel Grid.Column="1">
+                <Button IsEnabled="{Binding ViewModel.SelectedGatewayInfo.Id}"
+                        Command="{Binding ViewModel.ChangeNetworkAdapterConfigurationCommand}"
+                        HorizontalAlignment="Center"
+                        Width="130"
+                        VerticalAlignment="Top"
+                        Margin="0 0 0 8">
+                    Change gateway
+                </Button>
+                
+                <Button Command="{Binding ViewModel.AutoObtainIPCommand}"
+                        HorizontalAlignment="Center"
+                        Width="130"
+                        VerticalAlignment="Top">
+                    Auto Obtain IP
+                </Button>
+            </StackPanel>
         </Grid>
     </Grid>
 </ui:UiPage>

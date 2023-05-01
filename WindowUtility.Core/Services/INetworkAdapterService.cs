@@ -5,7 +5,8 @@ namespace WindowUtility.Core.Services
 {
     public interface INetworkAdapterService
     {
-        void ChangeDefaultGateway();
+        void ChangeNetworkConfiguration(NetworkAdapterInformation currentNetworkConfig, string newDefaultGateway);
         NetworkAdapterInformation GetCurrentNetworkStatistic(NetworkInterfaceType? networkType = NetworkInterfaceType.Ethernet);
+        void EnableDHCP();
     }
 }
